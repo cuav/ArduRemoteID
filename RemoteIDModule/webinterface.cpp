@@ -99,12 +99,10 @@ void WebInterface::init(void)
     /*handling uploading firmware file */
     server.on("/update", HTTP_POST, []() {
         if (Update.hasError()) {
-			server.sendHeader("Connection", "close");
 		    server.send(500, "text/plain","FAIL");
 		    Serial.printf("Update Failed: Update function has errors\n");
 		    delay(5000);
 		} else {
-			server.sendHeader("Connection", "close");
 			server.send(200, "text/plain","OK");
 			Serial.printf("Update Success: \nRebooting...\n");
 			delay(1000);
@@ -141,20 +139,13 @@ void WebInterface::init(void)
                 Update.write(&ff, 1);
             }
             if (!CheckFirmware::check_OTA_next(partition_new_firmware, lead_bytes, lead_len)) {
+                Update.abort();
                 Serial.printf("Update Failed: firmware checks have errors\n");
-                server.sendHeader("Connection", "close");
-                server.send(500, "text/plain","FAIL");
-                delay(5000);
             } else if (Update.end(true)) {
                 Serial.printf("Update Success: %u\nRebooting...\n", upload.totalSize);
-                server.sendHeader("Connection", "close");
-                server.send(200, "text/plain","OK");
             } else {
                 Update.printError(Serial);
                 Serial.printf("Update Failed: Update.end function has errors\n");
-                server.sendHeader("Connection", "close");
-                server.send(500, "text/plain","FAIL");
-                delay(5000);
             }
         }
     });
