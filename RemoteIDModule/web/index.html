@@ -124,21 +124,17 @@
                     if (evt.lengthComputable) {
                        var per = evt.loaded / evt.total;
                        $('#progress').html('progress: ' + Math.round(per*100) + '%');
-                       if (evt.loaded == evt.total) {
-                           setTimeout(function(){ //popup after 2 second
-							   if (xhr.status === 200) {
-                                   $('#progress').html('progress: done');
-                                   alert("Firmware upgrade completed!\n\nPress OK to reboot the RemoteID device.");
-                                   window.location.reload(true);
-							   }
-                           }, 2000);
-                       }
                    }
                 }, false);
                 return xhr;
             },
             success:function(d, s) {
                 console.log('success!');
+                setTimeout(function(){ //popup after 2 second
+                    $('#progress').html('progress: done');
+                    alert("Firmware upgrade completed!\n\nPress OK to reboot the RemoteID device.");
+                    window.location.reload(true);
+                }, 2000);
             },
             error: function (a, b, c) {
 				 setTimeout(function(){ //popup after 1 second
