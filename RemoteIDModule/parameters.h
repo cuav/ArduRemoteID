@@ -19,6 +19,10 @@
 #define WIFI_PASSWORD "ArduRemoteID"
 #endif
 
+#ifndef WIFI_BCN_RATE
+#define WIFI_BCN_RATE 0
+#endif
+
 class Parameters {
 public:
 #if defined(PIN_CAN_TERM)

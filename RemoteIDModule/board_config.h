@@ -174,6 +174,7 @@
 
 #define WIFI_SSID_PREFIX "C-RID"
 #define WIFI_PASSWORD "cuav12345678"
+#define WIFI_BCN_RATE 1
 
 #else
 #error "unsupported board"
